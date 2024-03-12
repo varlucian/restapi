@@ -5,14 +5,14 @@ metadata:
 spec:
   hosts:
     - provider
-    - provider.gitops-nxm-v2.svc.cluster.local
+    - provider.gitops-v2.svc.cluster.local
   http:
     - match:
         - uri:
             prefix: "/req"
       route:
         - destination:
-            # with a 'migration' flag the destination host can be changed from nxm-v2 to the new ns1 namespace
-            host: provider.gitops-ns1.svc.cluster.local
+            # with a 'migration' flag the destination host can be changed from gitops-v2 to the new gitops-provider namespace
+            host: provider.gitops-provider.svc.cluster.local
             port:
               number: 80
