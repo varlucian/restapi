@@ -12,6 +12,7 @@ spec:
             prefix: "/req"
       route:
         - destination:
+            # with a 'migration' flag the destination host can be changed from nxm-v2 to the new ns1 namespace
             host: provider.gitops-ns1.svc.cluster.local
             port:
               number: 80

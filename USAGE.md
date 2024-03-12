@@ -37,3 +37,29 @@
         {"id":"345","name":"Provider response for 345"}%
     * `kubectl exec -it consumer-5467ff778b-7wx2l -c curl -- curl provider.gitops-ns1/req/345`
         {"id":"345","name":"Provider response for 345"}%
+
+
+# Scenarios
+
+The provider is migrated to `gitops-ns1`.
+
+The consumer is migrated to `gitops-ns2`.
+
+The VS is redirecting `provider` and `provider.gitops-nxm-v2` to `gitops-ns1`.
+| Consumer ns   | VS ns         | Query                    | Reply from                                 | Comment                                                               |
+| ------------- | ------------- | ------------------------ | ------------------------------------------ | --------------------------------------------------------------------- |
+| gitops-nxm-v2 |               | provider                 | gitops-nxm-v2                              | Before migration: both are in nxm-v2                                  |
+|               |               | provider.gitops-nxm-v2   | gitops-nxm-v2                              | Before migration: both are in nxm-v2                                  |
+|               |               | provider.gitops-ns1      | gitops-ns1                                 | --- Irrelevant (consumer needs to change)                             |
+|               | gitops-nxm-v2 | provider[.gitops-nxm-v2] | gitops-ns1                                 | --- VS better to be installed in the provider namespace               |
+|               | gitops-nxm-v2 | provider.gitops-ns1      | gitops-ns1                                 | --- VS better to be installed in the provider namespace               |
+|               | gitops-nxm-v2 | provider.gitops-ns2      | gitops-ns2                                 | --- Irrelevant (provider is not installed in ns2)                     |
+|               | gitops-ns1    | provider[.gitops-nxm-v2] | gitops-ns1                                 | Provider migration: VS installed in provider namespace                |
+| gitops-ns2    | gitops-ns1    | provider                 | curl: (6) Could not resolve host: provider | Consumer migration: !!! NOT what we want !!! We'd expect to go in ns1 |
+| gitops-ns2    | gitops-ns1    | provider.gitops-nxm-v2   | gitops-ns1                                 | Consumer migration: OK                                                |
+
+
+## Migration steps
+
+* Initially, both provider and consumer are in nxm-v2 namespace
+*
