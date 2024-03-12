@@ -18,8 +18,8 @@ kubectl label namespace gitops-consumer istio-injection=enabled
 Create provider deployment and services in corresponding namespaces
 
 ```shell
-kubectl apply -n gitops-v2 -f deployment.yaml
-kubectl apply -n gitops-provider -f deployment.yaml
+kubectl apply -n gitops-v2 -f k8s/provider/deployment.yaml
+kubectl apply -n gitops-provider -f k8s/provider/deployment.yaml
 kubectl create service -n gitops-v2 clusterip provider --tcp=80:80
 kubectl create service -n gitops-provider clusterip provider --tcp=80:80
 ```
@@ -38,7 +38,7 @@ kubectl create service -n gitops-provider clusterip provider --tcp=80:80
 * Create consumer `curl` pod
 
 ```shell
-kubectl apply -n gitops-v2 -f client/pod.yaml
+kubectl apply -n gitops-v2 -f k8s/consumer/pod.yaml
 ```
 
 Test by querying the provider
