@@ -1,0 +1,29 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: provider
+  name: provider
+spec:
+  selector:
+    matchLabels:
+      app: provider
+  template:
+    metadata:
+      labels:
+        app: provider
+    spec:
+      containers:
+      - env:
+        - name: POD_NAMESPACE
+          valueFrom:
+            fieldRef:
+              apiVersion: v1
+              fieldPath: metadata.namespace
+        image: varlucian/rest-nodejs:1.1.0
+        imagePullPolicy: IfNotPresent
+        name: rest-nodejs
+        ports:
+        - containerPort: 80
+          protocol: TCP
+      restartPolicy: Always

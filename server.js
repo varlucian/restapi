@@ -3,9 +3,10 @@ const app = express();
 
 app.get("/req/:id", (req, res) => {
   const id = req.params.id;
+  const ns = process.env.POD_NAMESPACE;
   res.json({
-    id,
-    name: `Provider response for ${id}`
+	id: id,
+    namespace: `${ns}`
   });
 });
 
