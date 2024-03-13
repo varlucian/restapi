@@ -65,7 +65,11 @@ kubectl apply -n gitops-v2 -f virtual.yaml
 
 ```shell
 watch 'echo "Services:"; for ns in gitops-v2 gitops-provider gitops-consumer; do echo "* $ns"; kubectl get svc --no-headers -n $ns; done'
+```
+```shell
 watch 'echo "Pods"; for ns in gitops-v2 gitops-provider gitops-consumer; do echo "* $ns"; kubectl get pod --no-headers -n $ns; done'
+```
+```shell
 watch 'echo "Virtual services"; for ns in gitops-v2 gitops-provider gitops-consumer; do echo "* $ns"; kubectl get vs --no-headers -n $ns; done'
 ```
 
