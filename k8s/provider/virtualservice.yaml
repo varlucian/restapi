@@ -16,3 +16,5 @@ spec:
             host: provider.gitops-provider.svc.cluster.local
             port:
               number: 80
+  exportTo:
+    - "*"
